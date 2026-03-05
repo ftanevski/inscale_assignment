@@ -1,3 +1,5 @@
+import { Destination } from "@/types";
+
 export const LOGIN_URL =
   "https://tripx-test-functions.azurewebsites.net/api/login";
 
@@ -32,4 +34,14 @@ export async function login(
   } catch {
     return { success: false, error: "network_error" };
   }
+}
+
+export async function fetchDestinations(): Promise<Destination[]> {
+  const res = await fetch(DESTINATIONS_URL);
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch destinations (${res.status})`);
+  }
+
+  return res.json();
 }
