@@ -1,13 +1,16 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import useAuth from "@/hooks/useAuth";
 import useDestinations from "@/hooks/useDestinations";
+import { clearSession, getBookingCode } from "@/lib/auth";
 import DestinationCard from "@/components/DestinationCard";
 import SearchBar from "@/components/SearchBar";
 import { filterDestinations } from "@/lib/filterDestinations";
 
 export default function DestinationsPage() {
+  const router = useRouter();
   const { checked, authed } = useAuth({
     requireAuth: true,
     redirectTo: "/login",
@@ -22,13 +25,33 @@ export default function DestinationsPage() {
 
   const hasResults = filtered.length > 0;
   const showEmpty = !loading && !error && !hasResults;
+  const bookingCode = checked ? getBookingCode() : null;
+
+  function handleLogout() {
+    clearSession();
+    router.replace("/login");
+  }
 
   if (!checked || !authed) return null;
 
   return (
     <main className="min-h-screen px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       <div className="mx-auto max-w-6xl">
-        <h1 className="mb-4 text-xl font-bold sm:mb-6 sm:text-2xl">Destinations</h1>
+        <div className="mb-4 flex items-center justify-between sm:mb-6">
+          <h1 className="text-xl font-bold sm:text-2xl">Destinations</h1>
+          <button
+            onClick={handleLogout}
+            className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+          >
+            Log out
+          </button>
+        </div>
+
+        {bookingCode && (
+          <div className="mb-4 rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white sm:mb-6">
+            Booking Code: {bookingCode}
+          </div>
+        )}
 
         {!loading && !error && destinations.length > 0 && (
           <div className="mb-6">

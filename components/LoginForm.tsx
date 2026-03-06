@@ -17,6 +17,7 @@ export default function LoginForm() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [bookingCode, setBookingCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lockoutDismissed, setLockoutDismissed] = useState(false);
@@ -43,7 +44,7 @@ export default function LoginForm() {
 
     if (result.success) {
       reset();
-      setSession();
+      setSession(bookingCode.trim() || undefined);
       router.push("/destinations");
       return;
     }
@@ -106,6 +107,21 @@ export default function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
             placeholder="Enter your password"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="bookingCode" className="mb-1 block text-sm font-medium">
+            Booking Code <span className="font-normal text-gray-400">(optional)</span>
+          </label>
+          <input
+            id="bookingCode"
+            type="text"
+            disabled={disabled}
+            value={bookingCode}
+            onChange={(e) => setBookingCode(e.target.value)}
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
+            placeholder="Enter booking code"
           />
         </div>
 
