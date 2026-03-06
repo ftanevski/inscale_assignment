@@ -3,6 +3,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "@/lib/api";
+import { setSession } from "@/lib/auth";
 import useLoginRateLimiter from "@/hooks/useLoginRateLimiter";
 import Notification from "@/components/Notification";
 
@@ -42,6 +43,7 @@ export default function LoginForm() {
 
     if (result.success) {
       reset();
+      setSession();
       router.push("/destinations");
       return;
     }

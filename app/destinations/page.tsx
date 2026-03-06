@@ -1,12 +1,17 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import useAuth from "@/hooks/useAuth";
 import useDestinations from "@/hooks/useDestinations";
 import DestinationCard from "@/components/DestinationCard";
 import SearchBar from "@/components/SearchBar";
 import { filterDestinations } from "@/lib/filterDestinations";
 
 export default function DestinationsPage() {
+  const { checked, authed } = useAuth({
+    requireAuth: true,
+    redirectTo: "/login",
+  });
   const { destinations, loading, error } = useDestinations();
   const [search, setSearch] = useState("");
 
@@ -17,6 +22,8 @@ export default function DestinationsPage() {
 
   const hasResults = filtered.length > 0;
   const showEmpty = !loading && !error && !hasResults;
+
+  if (!checked || !authed) return null;
 
   return (
     <main className="min-h-screen p-4">
