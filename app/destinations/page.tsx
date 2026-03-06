@@ -26,9 +26,9 @@ export default function DestinationsPage() {
   if (!checked || !authed) return null;
 
   return (
-    <main className="min-h-screen p-4">
+    <main className="min-h-screen px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       <div className="mx-auto max-w-6xl">
-        <h1 className="mb-6 text-2xl font-bold">Destinations</h1>
+        <h1 className="mb-4 text-xl font-bold sm:mb-6 sm:text-2xl">Destinations</h1>
 
         {!loading && !error && destinations.length > 0 && (
           <div className="mb-6">
@@ -57,7 +57,7 @@ export default function DestinationsPage() {
         )}
 
         {hasResults && (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
             {filtered.map((destination) => (
               <DestinationCard
                 key={destination.code}

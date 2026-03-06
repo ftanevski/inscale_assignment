@@ -57,7 +57,7 @@ export default function Notification({
 
   return (
     <div
-      className={`fixed right-4 bottom-4 z-50 w-80 transition-all duration-300 ease-out ${
+      className={`fixed right-4 bottom-4 left-4 z-50 sm:left-auto sm:w-80 transition-all duration-300 ease-out ${
         isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
       }`}
     >
